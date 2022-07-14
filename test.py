@@ -1,5 +1,4 @@
 from airflow import DAG
-from airflow_dags_wizeline.hello_world import CLOUD_PROVIDER, DAG_ID, STABILITY_STATE
 from airflow.utils.dates import days_Ago
 from airflow.operators.dummy import DummyOperator
 
