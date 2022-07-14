@@ -7,7 +7,6 @@ DAG_ID = "gcp_database_ingestion_workflow"
 CLOUD_PROVIDER = "gcp"
 STABILITY_STATE = "unstable"
 
-GCP_CONN_ID = "google_cloud_default"
 GCS_BUCKET_NAME = "wizeline-project-356123-input"
 GCS_KEY_NAME = "user_purchase.csv"
 
