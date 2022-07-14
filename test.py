@@ -2,7 +2,7 @@ from airflow import DAG
 from airflow.utils.dates import days_ago
 from airflow.operators.dummy import DummyOperator
 from airflow.providers.google.cloud.sensors.gcs import GCSObjectExistenceSensor
-from airflow.postgres.operators.postgres import PostgresOperator
+from airflow.providers.postgres.operators.postgres import PostgresOperator
 
 DAG_ID = "gcp_database_ingestion_workflow"
 CLOUD_PROVIDER = "gcp"
