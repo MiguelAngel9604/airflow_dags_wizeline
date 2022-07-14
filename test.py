@@ -34,7 +34,7 @@ with DAG(
         task_id="PostgresOperator",
         postgres_conn_id =POSTGRES_CONN_ID,
         sql=f"""
-        CREATE TABLE IF NOT EXISTS {POSTGRES_TABLE_NAME} (
+        CREATE TABLE IF NOT EXISTS bootcampdb.user_purchase (
             invoice_number VARCHAR(10),
             stock_code VARCHAR(20),
             detail VARCHAR(1000),
