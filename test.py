@@ -1,15 +1,19 @@
-from datetime import datetime
 from airflow import DAG
-from airflow.operators.dummy_operator import DummyOperator
-from airflow.operators.python_operator import PythonOperator
+from airflow_dags_wizeline.hello_world import CLOUD_PROVIDER, DAG_ID, STABILITY_STATE
+from airflow.utils.dates import days_Ago
+from airflow.operators.dummy import DummyOperator
 
-def print_test():
-    return 'Second DAG Test'
 
-dag = DAG('test_Dag', description='test_Dag',
-          schedule_interval='0 12 * * *',
-          start_date=datetime(2017, 3, 20), catchup=False)
+DAG_ID = "gcp_database_ingestion_workflow"
+CLOUD_PROVIDER = "gcp"
+STABILITY_STATE = "unstable"
 
-test_operator = PythonOperator(task_id='test_Dag', python_callable=print_test, dag=dag)
-
-test_operator 
+with DAG(
+    dag_id = DAG_ID,
+    schedule_interval = "@once",
+    start_date=days_ago(1),
+    tags = [CLOUD_PROVIDER,STABILITY_STATE]
+) as dag:
+    start_workflow = DummyOperator(task_id="start_workflow")
+    
+    start_workflow
