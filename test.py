@@ -1,5 +1,5 @@
 from airflow import DAG
-from airflow.utils.dates import days_Ago
+from airflow.utils.dates import days_ago
 from airflow.operators.dummy import DummyOperator
 
 
