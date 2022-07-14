@@ -21,7 +21,6 @@ with DAG(
     
     verify_key_existence = GCSObjectExistenceSensor(
         task_id="verify_key_existence",
-        google_cloud_conn_id=GCP_CONN_ID,
         bucket=GCS_BUCKET_NAME,
         object=GCS_KEY_NAME,
     )
