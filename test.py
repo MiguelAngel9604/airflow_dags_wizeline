@@ -34,6 +34,7 @@ with DAG(
         task_id="PostgresOperator",
         postgres_conn_id =POSTGRES_CONN_ID,
         sql=f"""
+        CREATE SCHEMA IF NOT EXISTS dbname;
         CREATE TABLE IF NOT EXISTS dbname.user_purchase (
             invoice_number VARCHAR(10),
             stock_code VARCHAR(20),
