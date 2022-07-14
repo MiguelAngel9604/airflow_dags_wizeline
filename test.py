@@ -7,6 +7,7 @@ DAG_ID = "gcp_database_ingestion_workflow"
 CLOUD_PROVIDER = "gcp"
 STABILITY_STATE = "unstable"
 
+GCP_CONN_ID = "google_cloud_conn"
 GCS_BUCKET_NAME = "wizeline-project-356123-input"
 GCS_KEY_NAME = "user_purchase.csv"
 
@@ -20,6 +21,7 @@ with DAG(
     
     verify_key_existence = GCSObjectExistenceSensor(
         task_id="verify_key_existence",
+        google_cloud_conn_id=GCP_CONN_ID,
         bucket=GCS_BUCKET_NAME,
         object=GCS_KEY_NAME,
     )
