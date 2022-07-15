@@ -82,10 +82,10 @@ with DAG(
         python_callable = ingest_data_from_gcs,
         op_kwargs={
             "gcp_conn_id": GCP_CONN_ID,
-            "postgres_conn_id": "dbname."+POSTGRES_CONN_ID,
+            "postgres_conn_id": POSTGRES_CONN_ID,
             "gcs_bucket": GCS_BUCKET_NAME,
             "gcs_object": GCS_KEY_NAME,
-            "postgres_table": POSTGRES_TABLE_NAME,
+            "postgres_table": "dbname."+POSTGRES_TABLE_NAME,
         },
         trigger_rule=TriggerRule.ONE_SUCCESS,
     )
