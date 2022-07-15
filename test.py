@@ -33,12 +33,13 @@ def ingest_data_from_gcs (
     
     gcs_hook = GCSHook(gcp_conn_id=gcp_conn_id)
     psql_hook = PostgresHook(postgres_conn_id)
-    
+
     with tempfile.NamedTemporaryFile() as tmp:
         gcs_hook.download(
-            bucket_name=gcs_bucket, object_name=gcs_object,filename=tmp.name
+            bucket_name=gcs_bucket, object_name=gcs_object, filename=tmp.name
         )
         psql_hook.bulk_load(table=postgres_table, tmp_file=tmp.name)
+
 
 with DAG(
     dag_id = DAG_ID,
