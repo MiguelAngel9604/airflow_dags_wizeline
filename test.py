@@ -19,7 +19,7 @@ GCS_KEY_NAME = "user_purchase.csv"
 
 # Postgres constants
 POSTGRES_CONN_ID = "postcon"
-POSTGRES_TABLE_NAME = "dbname.user_purchase"
+POSTGRES_TABLE_NAME = "users_purchase"
 
 
 def ingest_data_from_gcs (
@@ -60,15 +60,15 @@ with DAG(
         postgres_conn_id =POSTGRES_CONN_ID,
         sql=f"""
         CREATE SCHEMA IF NOT EXISTS dbname;
-        CREATE TABLE IF NOT EXISTS dbname.user_purchase (
-            invoice_number VARCHAR(10),
-            stock_code VARCHAR(20),
-            detail VARCHAR(1000),
+        CREATE TABLE IF NOT EXISTS dbname.{POSTGRES_TABLE_NAME} (
+            invoice_number VARCHAR(100),
+            stock_code VARCHAR(200),
+            detail VARCHAR(10000),
             quantity INT,
             invoice_date TIMESTAMP,
             unit_price NUMERIC(8,3),
             customer_id INT,
-            country VARCHAR(20)
+            country VARCHAR(200)
             );
         """
     )
