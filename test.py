@@ -32,7 +32,7 @@ def ingest_data_from_gcs (
     import tempfile
     
     gcs_hook = GCSHook(gcp_conn_id=gcp_conn_id)
-    psql_hook = PostgresHook(postgres_conn_id=postgres_conn_id)
+    psql_hook = PostgresHook(postgres_conn_id)
     
     with tempfile.NamedTemporaryFile() as tmp:
         gcs_hook.download(
