@@ -19,7 +19,7 @@ GCS_KEY_NAME = "user_purchase.csv"
 
 # Postgres constants
 POSTGRES_CONN_ID = "postcon"
-POSTGRES_TABLE_NAME = "users_purchase"
+POSTGRES_TABLE_NAME = "user_purchase"
 
 
 def ingest_data_from_gcs (
