@@ -99,7 +99,7 @@ with DAG(
     
     validate_data = BranchSQLOperator(
         task_id="validate_data",
-        postgres_conn_id =POSTGRES_CONN_ID,
+        conn_id =POSTGRES_CONN_ID,
         sql=f"SELECT COUNT(*) AS total_rows FROM dbname.{POSTGRES_TABLE_NAME}",
         follow_task_ids_if_false = [continue_process.task_id],
         follow_task_ids_if_true = [clear_table.task_id],
