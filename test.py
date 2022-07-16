@@ -124,3 +124,4 @@ with DAG(
     )
     validate_data >> [clear_table,continue_process] >> ingest_data
     ingest_data >> end_workflow
+    
