@@ -7,7 +7,7 @@ from airflow.operators.python import PythonOperator
 from airflow.utils.trigger_rule import TriggerRule
 from airflow.providers.google.cloud.hooks.gcs import GCSHook
 from airflow.providers.postgres.hooks.postgres import PostgresHook
-
+from airflow.operators.sql import BranchSQLOperator
 
 DAG_ID = "gcp_database_ingestion_workflow"
 CLOUD_PROVIDER = "gcp"
@@ -73,6 +73,12 @@ with DAG(
         """
     )
     
+    clear_table = PostgresOperator(
+        task_id="PostgresOperator",
+        postgres_conn_id =POSTGRES_CONN_ID,
+        sql=f"DELETE FROM dbname.{POSTGRES_TABLE_NAME}"
+    )
+    
     end_workflow = DummyOperator(
         task_id="end_workflow"
     )
@@ -89,10 +95,24 @@ with DAG(
         },
         trigger_rule=TriggerRule.ONE_SUCCESS,
     )
+    continue_process  = DummyOperator(task_id = "continue_process")
+    
+    validate_data = BranchSQLOperator(
+        task_id="validate_data",
+        postgres_conn_id =POSTGRES_CONN_ID,
+        sql=f"SELECT COUNT(*) AS total_rows FROM dbname.{POSTGRES_TABLE_NAME}",
+        follow_task_ids_if_false = [continue_process.task_id],
+        follow_task_ids_if_true = [clear_table.task_id],
+                
+    )
+    
+    
     
     (
     start_workflow
     >> verify_key_existence
     >> create_table_entity
-    >> ingest_data
+    >> validate_data
     )
+    validate_data >> [clear_table,continue_process] >> ingest_data
+    ingest_data >> end_workflow
