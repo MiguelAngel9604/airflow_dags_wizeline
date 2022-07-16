@@ -15,7 +15,7 @@ STABILITY_STATE = "unstable"
 
 GCP_CONN_ID = "google_cloud_conn"
 GCS_BUCKET_NAME = "wizeline-project-356123-input"
-GCS_KEY_NAME = "users.csv"
+GCS_KEY_NAME = "user_purchase.csv"
 
 # Postgres constants
 POSTGRES_CONN_ID = "postcon"
@@ -32,7 +32,7 @@ def ingest_data_from_gcs (
     import tempfile
         # Download the file to a temporary directory and return a file handle
     gcs_hook = GCSHook(gcp_conn_id=gcp_conn_id)
-    tmp_file = gcs_hook.provide_file(object_url='gs://wizeline-project-356123-input/users.csv')
+    tmp_file = gcs_hook.provide_file(object_url='gs://wizeline-project-356123-input/user_purchase.csv')
     
     # Open Postgres Connection
     get_postgres_conn = PostgresHook(postgres_conn_id).get_conn()
@@ -124,4 +124,3 @@ with DAG(
     )
     validate_data >> [clear_table,continue_process] >> ingest_data
     ingest_data >> end_workflow
-    
