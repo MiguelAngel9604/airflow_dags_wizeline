@@ -42,14 +42,21 @@ def ingest_data_from_gcs (
         gcs_hook.download(
             bucket_name=gcs_bucket, object_name=gcs_object, filename=tmp.name
         )
-        with open(tmp.name, 'r') as f:
-            next(f)
-            curr.copy_from(f, postgres_table, sep=',',encoding='latin-1')
+        sqlstr = "COPY dbname.{POSTGRES_TABLE_NAME} FROM STDIN DELIMITER ',' CSV"
+        with open(tmp.name) as f:
+            curr.copy_expert(sqlstr, f)
             get_postgres_conn.commit()
+            
+        """ with open(tmp.name, 'r') as f:
+                next(f)
+                curr.copy_from(f, postgres_table, sep=',',encoding='latin-1')
+                get_postgres_conn.commit()
+        """
+        
         
         #curr.copy_from(tmp.name, postgres_table, sep=',')
         #get_postgres_conn.commit()
-        #cursor.copy_expert("COPY dbname.{POSTGRES_TABLE_NAME} TO STDOUT WITH CSV HEADER", tmp.name)
+        
         #conn.commit()
         #psql_hook.bulk_load(table=postgres_table, tmp_file=tmp.name)
 
