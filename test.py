@@ -45,7 +45,7 @@ def ingest_data_from_gcs (
         with tmp as tmp:
             tmp.flush()
             with open(tmp.name) as fh:
-                curr.copy_expert("COPY bootcampdb.users_purchase FROM STDIN WITH CSV HEADER", fh)
+                curr.copy_expert("COPY dbname.users_purchase FROM STDIN WITH CSV HEADER", fh)
                 get_postgres_conn.commit()
 
 
