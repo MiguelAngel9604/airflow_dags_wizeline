@@ -74,7 +74,7 @@ with DAG(
     )
     
     clear_table = PostgresOperator(
-        task_id="PostgresOperator",
+        task_id="clear_table",
         postgres_conn_id =POSTGRES_CONN_ID,
         sql=f"DELETE FROM dbname.{POSTGRES_TABLE_NAME}"
     )
