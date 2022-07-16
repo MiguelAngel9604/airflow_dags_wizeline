@@ -35,16 +35,19 @@ def ingest_data_from_gcs (
     psql_hook = PostgresHook(postgres_conn_id)
     
     
-    conn = psql_hook.get_conn()
-    cursor = conn.cursor()
+    get_postgres_conn = psql_hook.get_conn()
+    curr = get_postgres_conn.cursor("cursor")
 
     with tempfile.NamedTemporaryFile() as tmp:
         gcs_hook.download(
             bucket_name=gcs_bucket, object_name=gcs_object, filename=tmp.name
         )
-        cursor.copy_expert("COPY dbname.{POSTGRES_TABLE_NAME} TO STDOUT WITH CSV HEADER", tmp.name)
-        conn.commit()
+        curr.copy_from(tmp.name, postgres_table, sep=',')
+        get_postgres_conn.commit()
+        #cursor.copy_expert("COPY dbname.{POSTGRES_TABLE_NAME} TO STDOUT WITH CSV HEADER", tmp.name)
+        #conn.commit()
         #psql_hook.bulk_load(table=postgres_table, tmp_file=tmp.name)
+
 
 with DAG(
     dag_id = DAG_ID,
