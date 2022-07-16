@@ -15,7 +15,7 @@ STABILITY_STATE = "unstable"
 
 GCP_CONN_ID = "google_cloud_conn"
 GCS_BUCKET_NAME = "wizeline-project-356123-input"
-GCS_KEY_NAME = "user_purchase.csv"
+GCS_KEY_NAME = "users.csv"
 
 # Postgres constants
 POSTGRES_CONN_ID = "postcon"
