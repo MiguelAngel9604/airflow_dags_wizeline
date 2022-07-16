@@ -30,23 +30,22 @@ def ingest_data_from_gcs (
     postgres_conn_id: str = "postgres_default",
 ):
     import tempfile
-    
+        # Download the file to a temporary directory and return a file handle
     gcs_hook = GCSHook(gcp_conn_id=gcp_conn_id)
-    psql_hook = PostgresHook(postgres_conn_id)
+    tmp_file = gcs_hook.provide_file(object_url='gs://wizeline-project-356123-input/users.csv')
     
-    
-    get_postgres_conn = psql_hook.get_conn()
-    curr = get_postgres_conn.cursor("cursor")
+    # Open Postgres Connection
+    get_postgres_conn = PostgresHook(postgres_conn_id).get_conn()
+    curr = get_postgres_conn.cursor()
 
-    with tempfile.NamedTemporaryFile() as tmp:
-        gcs_hook.download(
-            bucket_name=gcs_bucket, object_name=gcs_object, filename=tmp.name
-        )
-        with tmp as tmp:
-            tmp.flush()
-            with open(tmp.name) as fh:
-                curr.copy_expert("COPY dbname.users_purchase FROM STDIN WITH CSV HEADER", fh)
-                get_postgres_conn.commit()
+    # Load csv into postgres
+    with tmp_file as tmp:
+        tmp.flush()
+        with open(tmp.name) as fh:
+            curr.copy_expert("COPY dbname.users_purchase FROM STDIN WITH CSV HEADER", fh)
+            get_postgres_conn.commit()
+    
+
 
 
 with DAG(
@@ -94,6 +93,7 @@ with DAG(
     ingest_data = PythonOperator(
         task_id = "ingest_data",
         python_callable = ingest_data_from_gcs,
+        provide_context=True,
         op_kwargs={
             "gcp_conn_id": GCP_CONN_ID,
             "postgres_conn_id": POSTGRES_CONN_ID,
