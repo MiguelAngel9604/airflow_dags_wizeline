@@ -44,7 +44,7 @@ def ingest_data_from_gcs (
         )
         with open(tmp.name, 'r') as f:
             next(f)
-            curr.copy_from(f, postgres_table, sep=',')
+            curr.copy_from(f, postgres_table, sep=',',encoding='latin-1')
             get_postgres_conn.commit()
         
         #curr.copy_from(tmp.name, postgres_table, sep=',')
