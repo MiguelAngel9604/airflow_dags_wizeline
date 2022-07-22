@@ -10,8 +10,13 @@ from airflow.providers.google.cloud.operators.dataproc import (
     DataprocDeleteClusterOperator
 )
 
+
+GCP_CONN_ID = "google_cloud_conn"
+GCS_BUCKET_NAME = "wizeline-project-356123-input"
+GCS_KEY_NAME = "user_purchase.csv"
+
 CLUSTER_NAME = 'bootcamp-cluster'
-REGION='us-central1-a'
+REGION="us-central1"
 PROJECT_ID='wizeline-project-356123'
 PYSPARK_URI='gs://wizeline-project-356123-input/movie_logs_etl.py'
 
@@ -53,6 +58,7 @@ with DAG(
     ) as dag:
 
     create_cluster = DataprocCreateClusterOperator(
+        gcp_conn_id=GCP_CONN_ID,
         task_id="create_cluster",
         project_id=PROJECT_ID,
         cluster_config=CLUSTER_CONFIG,
@@ -61,6 +67,7 @@ with DAG(
     )
 
     pyspark_task = DataprocSubmitJobOperator(
+        gcp_conn_id=GCP_CONN_ID,
         task_id="pyspark_task",
         job=PYSPARK_JOB,
         region=REGION,
@@ -68,6 +75,7 @@ with DAG(
     )
 
     delete_cluster = DataprocDeleteClusterOperator(
+        gcp_conn_id=GCP_CONN_ID,
         task_id="delete_cluster",
         project_id=PROJECT_ID,
         cluster_name=CLUSTER_NAME,
@@ -76,3 +84,4 @@ with DAG(
     )
 
     create_cluster >> pyspark_task >> delete_cluster
+    
