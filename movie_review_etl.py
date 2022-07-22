@@ -18,7 +18,7 @@ GCS_KEY_NAME = "user_purchase.csv"
 CLUSTER_NAME = 'bootcamp-cluster'
 REGION="us-central1"
 PROJECT_ID='wizeline-project-356123'
-PYSPARK_URI='gs://wizeline-project-356123-input/movie_logs_etl.py'
+PYSPARK_URI='gs://wizeline-project-356123-input/movies_reviews_etl.py'
 
 # Cluster definition
 CLUSTER_CONFIG = {
