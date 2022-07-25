@@ -1,41 +1,23 @@
-import psycopg2
+"""
+DAG using PostgresToGoogleCloudStorageOperator.
+"""
+import os
 from datetime import datetime
-from airflow import DAG
-from airflow.operators.python_operator import PythonOperator
-from airflow.providers.google.cloud.hooks.gcs import GCSHook
-from airflow.providers.postgres.hooks.postgres import PostgresHook
+
+from airflow import models
+from airflow.providers.google.cloud.transfers.postgres_to_gcs import (
+    PostgresToGCSOperator,
+)
+from airflow.models import Variable
 from airflow.utils.dates import days_ago
 
-temporary_file = 'temp_file.csv'
 
-GCS_BUCKET = "wizeline-project-356123-input"
-FILENAME = "csv_delete.csv"
-
-DAG_ID = "postgres_to_gcs"
-CLOUD_PROVIDER = "gcp"
-STABILITY_STATE = "unstable"
-
-GCP_CONN_ID = "google_cloud_conn"
-
-# Postgres constants
+PROJECT_ID = Variable.get("PROJECT_ID")
+GCS_BUCKET = Variable.get("STAGING_BUCKET")
+FILENAME = "user_purchase.csv"
+SQL_QUERY = "SELECT * FROM dbname.users_purchase;"
 POSTGRES_CONN_ID = "postcon"
-POSTGRES_TABLE_NAME = "users_purchase"
 
-def copy_hook():
-    pg_hook = PostgresHook(POSTGRES_CONN_ID)
-    conn = pg_hook.get_conn()
-    cursor = conn.cursor()
-    cursor.copy_expert("COPY dbname.users_purchase TO STDOUT WITH CSV HEADER", FILENAME)
-
-    gcs_hook = GCSHook(GCP_CONN_ID)
-    gcs_hook.upload(
-        bucket_name=GCS_BUCKET,
-        object_name=FILENAME,
-        filename=temporary_file,
-        timeout=120
-    )
-
-# Default arguments 
 default_args = {
     'owner': 'Angel.Lopez',
     'depends_on_past': False,    
@@ -44,16 +26,22 @@ default_args = {
     'email_on_retry': False
 }
 
-with DAG(
-    dag_id=DAG_ID,
+with models.DAG(
+    dag_id="postgres_to_gcs",
     default_args=default_args,
-    schedule_interval="@once",
+    schedule_interval="@once",  # Override to match your needs
+    start_date=datetime(2021, 1, 1),
     catchup=False,
-    tags=['capstone']
-    ) as dag:
-
-    postgres_to_bucket = PythonOperator(
-        task_id='postgres_to_bucket',
-        provide_context=True,
-        python_callable=copy_hook,
+    tags=["postgres", "gcs"],
+) as dag:
+    upload_data = PostgresToGCSOperator(
+        postgres_conn_id=POSTGRES_CONN_ID,
+        task_id="postgres_to_gcs",
+        sql=SQL_QUERY,
+        bucket=GCS_BUCKET,
+        filename=FILENAME,
+        export_format="csv",
+        gzip=False,
     )
+
+    upload_data
