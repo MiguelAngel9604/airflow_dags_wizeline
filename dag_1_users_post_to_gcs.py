@@ -17,6 +17,7 @@ GCS_BUCKET = Variable.get("STAGING_BUCKET")
 FILENAME = "user_purchase.csv"
 SQL_QUERY = "SELECT * FROM dbname.users_purchase;"
 POSTGRES_CONN_ID = "postcon"
+GCP_CONN_ID = "google_cloud_conn"
 
 default_args = {
     'owner': 'Angel.Lopez',
@@ -36,6 +37,7 @@ with models.DAG(
 ) as dag:
     upload_data = PostgresToGCSOperator(
         postgres_conn_id=POSTGRES_CONN_ID,
+        google_cloud_conn_id=GCP_CONN_ID,
         task_id="postgres_to_gcs",
         sql=SQL_QUERY,
         bucket=GCS_BUCKET,
