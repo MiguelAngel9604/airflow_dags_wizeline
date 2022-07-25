@@ -46,10 +46,17 @@ def ingest_data_from_gcs (
             get_postgres_conn.commit()
     
 
-
+default_args = {
+    'owner': 'Angel.Lopez',
+    'depends_on_past': False,    
+    'start_date': days_ago(1),
+    'email_on_failure': False,
+    'email_on_retry': False
+}
 
 with DAG(
     dag_id = DAG_ID,
+    default_args=default_args,
     schedule_interval = "@once",
     start_date=days_ago(1),
     tags = [CLOUD_PROVIDER,STABILITY_STATE]
