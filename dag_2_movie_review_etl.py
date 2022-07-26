@@ -12,13 +12,13 @@ from airflow.providers.google.cloud.operators.dataproc import (
 
 
 GCP_CONN_ID = "google_cloud_conn"
-GCS_BUCKET_NAME = "wizeline-project-356123-input"
+GCS_BUCKET_NAME = "etl_files_wz"
 GCS_KEY_NAME = "user_purchase.csv"
 
-CLUSTER_NAME = 'bootcamp-cluster'
+CLUSTER_NAME = 'bootcamp-wz'
 REGION="us-central1"
-PROJECT_ID='wizeline-project-356123'
-PYSPARK_URI='gs://wizeline-project-356123-input/movies_reviews_etl.py'
+PROJECT_ID='capstone-project-wz'
+PYSPARK_URI='gs://etl_files_wz/movies_reviews_etl.py'
 
 # Cluster definition
 CLUSTER_CONFIG = {
