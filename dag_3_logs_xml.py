@@ -1,6 +1,6 @@
 import os
 from datetime import datetime
-from airflow.models import Variable
+
 from airflow import models
 from airflow.providers.google.cloud.operators.dataproc import (
     DataprocCreateClusterOperator,
@@ -12,7 +12,7 @@ from airflow.utils.trigger_rule import TriggerRule
 ENV_ID = "dev"
 DAG_ID = "dataproc_creation"
 CLUSTER_NAME = f"cluster-dataproc-pyspark-{ENV_ID}"
-REGION = "us-central1"
+
 ZONE = "us-central1-a"
 
 BUCKET_NAME = "data-bootcamp-test-1-dev-data"
@@ -28,7 +28,7 @@ SQL_QUERY = "SELECT * FROM dbname.users_purchase;"
 POSTGRES_CONN_ID = "postcon"
 GCP_CONN_ID = "google_cloud_conn"
 PYSPARK_FILE = "gs://etl_files_wz/logs_xml_el.py"
-
+REGION = "northamerica-northeast1"
 # Cluster definition
 # [START how_to_cloud_dataproc_create_cluster]
 
