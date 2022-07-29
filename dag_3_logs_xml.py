@@ -29,7 +29,7 @@ SQL_QUERY = "SELECT * FROM dbname.users_purchase;"
 POSTGRES_CONN_ID = "postcon"
 GCP_CONN_ID = "google_cloud_conn"
 PYSPARK_FILE = "gs://etl_files_wz/logs_xml_el.py"
-REGION = "northamerica-northeast1"
+REGION = "us-west1"
 # Cluster definition
 # [START how_to_cloud_dataproc_create_cluster]
 
