@@ -8,6 +8,7 @@ from airflow.providers.google.cloud.operators.dataproc import (
     DataprocSubmitJobOperator,
 )
 from airflow.utils.trigger_rule import TriggerRule
+from airflow.models import Variable
 
 ENV_ID = "dev"
 DAG_ID = "dataproc_creation"
