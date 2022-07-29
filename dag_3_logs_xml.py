@@ -1,6 +1,6 @@
 import os
 from datetime import datetime
-
+from airflow.models import Variable
 from airflow import models
 from airflow.providers.google.cloud.operators.dataproc import (
     DataprocCreateClusterOperator,
