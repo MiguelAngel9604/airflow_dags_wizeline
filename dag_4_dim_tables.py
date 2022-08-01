@@ -21,7 +21,7 @@ CLUSTER_NAME = "dataproc-cluster-dim-tables"
 REGION = "northamerica-northeast1"
 PROJECT_ID = Variable.get("PROJECT_ID")
 PYSPARK_URI = "gs://etl_files_wz/dim_tables.py"
-GCP_CONN_ID = "gcp_conn"
+GCP_CONN_ID = "google_cloud_conn"
 
 # Cluster definition
 CLUSTER_CONFIG = {
