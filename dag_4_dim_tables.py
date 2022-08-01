@@ -18,7 +18,7 @@ default_args = {
 }
 DAG_ID = "dim_tables_to_bq"
 CLUSTER_NAME = "dataproc-cluster-dim-tables"
-REGION = "northamerica-northeast1"
+REGION = "us-west2-a"
 PROJECT_ID = Variable.get("PROJECT_ID")
 PYSPARK_URI = "gs://etl_files_wz/dim_tables.py"
 GCP_CONN_ID = "google_cloud_conn"
