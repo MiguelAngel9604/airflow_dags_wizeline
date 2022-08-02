@@ -19,6 +19,9 @@ SQL_QUERY = "SELECT * FROM dbname.users_purchase;"
 POSTGRES_CONN_ID = "postcon"
 GCP_CONN_ID = "google_cloud_conn"
 
+DAG_ID = "dag_1_users_post_to_gcs.py"
+
+
 default_args = {
     'owner': 'Angel.Lopez',
     'depends_on_past': False,    
@@ -28,7 +31,7 @@ default_args = {
 }
 
 with models.DAG(
-    dag_id="postgres_to_gcs",
+    dag_id=DAG_ID,
     default_args=default_args,
     schedule_interval="@once",  # Override to match your needs
     start_date=datetime(2021, 1, 1),
