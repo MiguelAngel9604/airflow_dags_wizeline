@@ -14,6 +14,7 @@ from airflow.providers.google.cloud.operators.dataproc import (
 GCP_CONN_ID = "google_cloud_conn"
 GCS_BUCKET_NAME = "etl_files_wz"
 GCS_KEY_NAME = "user_purchase.csv"
+DAG_ID = "dag_2_movie_review_etl"
 
 CLUSTER_NAME = 'bootcamp-wz'
 REGION = "northamerica-northeast1"
@@ -51,7 +52,7 @@ default_args = {
 }
 
 with DAG(
-    dag_id='submit_tokenizer',
+    dag_id=DAG_ID,
     default_args=default_args,
     schedule_interval="@once",
     catchup=False,
