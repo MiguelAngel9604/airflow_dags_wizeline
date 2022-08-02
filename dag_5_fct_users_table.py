@@ -18,7 +18,7 @@ default_args = {
     'email_on_retry': False
 }
 DAG_ID = "dag_5_fct_users_table"
-CLUSTER_NAME = "dataproc-cluster-fct_table"
+CLUSTER_NAME = "dataproc-cluster-fct-table"
 REGION = "us-west1"
 PROJECT_ID = Variable.get("PROJECT_ID")
 PYSPARK_URI = "gs://etl_files_wz/fct_user_table.py"
