@@ -11,7 +11,7 @@ from airflow.utils.trigger_rule import TriggerRule
 from airflow.models import Variable
 
 ENV_ID = "dev"
-DAG_ID = "dataproc_creation"
+DAG_ID = "dag_3_logs_xml_dev"
 CLUSTER_NAME = f"cluster-dataproc-pyspark-{ENV_ID}"
 
 ZONE = "us-central1-a"
