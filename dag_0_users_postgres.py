@@ -9,7 +9,7 @@ from airflow.providers.google.cloud.hooks.gcs import GCSHook
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 from airflow.operators.sql import BranchSQLOperator
 
-DAG_ID = "users_postgres"
+DAG_ID = 'dag_0_users_postgres'
 CLOUD_PROVIDER = "gcp"
 STABILITY_STATE = "unstable"
 
