@@ -43,7 +43,10 @@ CLUSTER_CONFIG = {
 PYSPARK_JOB = {
     "reference": {"project_id": PROJECT_ID},
     "placement": {"cluster_name": CLUSTER_NAME},
-    "pyspark_job": {"main_python_file_uri": PYSPARK_URI},
+    "pyspark_job": {
+        "main_python_file_uri": PYSPARK_URI,
+        "jar_file_uris": ["gs://spark-lib/bigquery/spark-bigquery-latest_2.12.jar"],
+        },
 
 }
 
