@@ -16,7 +16,7 @@ default_args = {
     'email_on_failure': False,
     'email_on_retry': False
 }
-DAG_ID = "dim_tables_to_bq"
+DAG_ID = "dag_4_dim_tables_to_bq_dev"
 CLUSTER_NAME = "dataproc-cluster-dim-tables2"
 REGION = "us-central1-a"
 PROJECT_ID = Variable.get("PROJECT_ID")
@@ -34,16 +34,15 @@ CLUSTER_CONFIG = {
         "num_instances": 2,
         "machine_type_uri": "n1-standard-2",
         "disk_config": {"boot_disk_type": "pd-standard", "boot_disk_size_gb": 50},
-    },
+
+    }
+    
 }
 
 PYSPARK_JOB = {
     "reference": {"project_id": PROJECT_ID},
     "placement": {"cluster_name": CLUSTER_NAME},
-    "pyspark_job": {
-        "main_python_file_uri": PYSPARK_URI,
-        "jar_file_uris": ["gs://spark-lib/bigquery/spark-bigquery-latest_2.12.jar"],
-        },
+    "pyspark_job": {"main_python_file_uri": PYSPARK_URI},
 
 }
 
