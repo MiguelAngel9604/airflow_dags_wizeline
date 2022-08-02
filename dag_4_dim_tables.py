@@ -12,13 +12,13 @@ from airflow.models import Variable
 default_args = {
     'owner': 'Angel.Lopez',
     'depends_on_past': False,    
-    "start_date": datetime(2021, 1, 1),
+    'start_date': days_ago(1),
     'email_on_failure': False,
     'email_on_retry': False
 }
 DAG_ID = "dag_4_dim_tables_to_bq_dev"
 CLUSTER_NAME = "dataproc-cluster-dim-tables2"
-REGION = "us-central1-a"
+REGION = "us-west1"
 PROJECT_ID = Variable.get("PROJECT_ID")
 PYSPARK_URI = "gs://etl_files_wz/dim_tables.py"
 GCP_CONN_ID = "google_cloud_conn"
