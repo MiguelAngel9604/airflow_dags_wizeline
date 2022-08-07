@@ -13,7 +13,7 @@ spark = SparkSession.builder.getOrCreate()
 
 # Connection to GCS and get files
 df_logs = spark.read.options(header=True).parquet(
-    "gs://stg_files_wz/logs/part-00000-780fdf28-1934-4055-a830-1a3578b43cd8-c000.snappy.parquet"
+    "gs://stg_files_wz/logs/part-00000-33189005-3c25-48c9-99c9-731e2f933c9c-c000.snappy.parquet"
 )
 
 #Defining tables' names
